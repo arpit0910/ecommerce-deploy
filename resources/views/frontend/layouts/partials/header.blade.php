@@ -95,12 +95,14 @@
                             <a href="{{route('frontend.profile')}}"><i class="icon-user"></i></a>
                         </div>
                         <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
-                            <a href="{{route('frontend.wishlist')}}"><i class="icon-heart"></i><span class="pro-count black">03</span></a>
+                            <a href="{{route('frontend.wishlist')}}"><i class="icon-heart"></i><span class="pro-count black wishlist-count">{{$wishlistCount}}</span></a>
+                            <input type="hidden" class="wishlist-hidden-count" value="{{$wishlistCount}}">
                         </div>
                         <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
                             <a class="cart-active" href="#">
-                                <i class="icon-basket-loaded"></i><span class="pro-count black">02</span>
+                                <i class="icon-basket-loaded"></i><span class="pro-count black cart-count">{{$cartCount}}</span>
                             </a>
+                            <input type="hidden" class="cart-hidden-count" value="{{$cartCount}}">
                         </div>
                         <div class="same-style-2 same-style-2-white same-style-2-hover-black main-menu-icon">
                             <a class="mobile-header-button-active" href="#"><i class="icon-menu"></i> </a>
