@@ -50,7 +50,7 @@ class FrontendController extends Controller
         if (auth()->user()) {
             $cartCount = Cart::where('user_id', auth()->user()->id)->count();
             $wishlistCount = Wishlist::where('user_id', auth()->user()->id)->count();
-            $wishlistItems = Wishlist::where('user_id', auth()->user()->id)->get();
+            $wishlistItems = Wishlist::where('user_id', auth()->user()->id)->with('Product')->get();
         }
         return view('frontend.wishlist', compact('wishlistItems', 'cartCount', 'wishlistCount'));
     }
@@ -62,7 +62,7 @@ class FrontendController extends Controller
         if (auth()->user()) {
             $cartCount = Cart::where('user_id', auth()->user()->id)->count();
             $wishlistCount = Wishlist::where('user_id', auth()->user()->id)->count();
-            $cartItems = Cart::where('user_id', auth()->user()->id)->get();
+            $cartItems = Cart::where('user_id', auth()->user()->id)->with('Product')->get();
         }
         return view('frontend.cart', compact('cartItems', 'cartCount', 'wishlistCount'));
     }
