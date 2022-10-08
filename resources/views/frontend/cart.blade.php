@@ -14,89 +14,47 @@
     </div> -->
 <div class="cart-main-area pt-115 pb-120">
     <div class="container">
+        @if(count($cartItems) > 0)
         <h3 class="cart-page-title">Your cart items</h3>
+        @endif
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                <form action="#">
-                    <div class="table-content table-responsive cart-table-content">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Image</th>
-                                    <th>Product Name</th>
-                                    <th>Until Price</th>
-                                    <th>Qty</th>
-                                    <th>Subtotal</th>
-                                    <th>action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#"><img src="{{asset('assets/images/cart/cart-1.jpg')}}" alt=""></a>
-                                    </td>
-                                    <td class="product-name"><a href="#">Simple Black T-Shirt</a></td>
-                                    <td class="product-price-cart"><span class="amount">$260.00</span></td>
-                                    <td class="product-quantity pro-details-quality">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                                        </div>
-                                    </td>
-                                    <td class="product-subtotal">$110.00</td>
-                                    <td class="product-remove">
-                                        <a href="#"><i class="icon_close"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#"><img src="{{asset('assets/images/cart/cart-2.jpg')}}" alt=""></a>
-                                    </td>
-                                    <td class="product-name"><a href="#">Norda Simple Backpack</a></td>
-                                    <td class="product-price-cart"><span class="amount">$150.00</span></td>
-                                    <td class="product-quantity pro-details-quality">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                                        </div>
-                                    </td>
-                                    <td class="product-subtotal">$150.00</td>
-                                    <td class="product-remove">
-                                        <a href="#"><i class="icon_close"></i></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        <a href="#"><img src="{{asset('assets/images/cart/cart-1.jpg')}}" alt=""></a>
-                                    </td>
-                                    <td class="product-name"><a href="#">Simple Black T-Shirt </a></td>
-                                    <td class="product-price-cart"><span class="amount">$170.00</span></td>
-                                    <td class="product-quantity pro-details-quality">
-                                        <div class="cart-plus-minus">
-                                            <input class="cart-plus-minus-box" type="text" name="qtybutton" value="2">
-                                        </div>
-                                    </td>
-                                    <td class="product-subtotal">$170.00</td>
-                                    <td class="product-remove">
-                                        <a href="#"><i class="icon_close"></i></a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="cart-shiping-update-wrapper">
-                                <div class="cart-shiping-update">
-                                    <a href="#">Continue Shopping</a>
-                                </div>
-                                <div class="cart-clear">
-                                    <button>Update Cart</button>
-                                    <a href="#">Clear Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <div class="row">
+                @if(count($cartItems) > 0)
+                <div class="table-content table-responsive cart-table-content mb-5">
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Until Price</th>
+                                <th>Qty</th>
+                                <th>Subtotal</th>
+                                <th>action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($cartItems as $item)
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <img src="{{asset('assets/images/images.png')}}" alt="" class="w-75">
+                                </td>
+                                <td class="product-name">{{ucfirst($item->Product->name)}}</td>
+                                <td class="product-price-cart"><span class="">₹</span><span class="ml-2 pl-1 amount">{{$item->Product->mrp}}</span></td>
+                                <td class="product-quantity pro-details-quality">
+                                    <div class="cart-plus-minus">
+                                        <input class="cart-plus-minus-box" data-id="{{$item->id}}" type="text" value="{{$item->quantity}}">
+                                    </div>
+                                </td>
+                                <td class="product-subtotal"><span class="">₹</span><span class="ml-2 pl-1 amount">@php $subTotal =($item->Product->mrp) * ($item->quantity) @endphp {{$subTotal}}</span></td>
+                                <td class="product-wishlist-cart">
+                                    <a href="javascript:void(0)" class="remove-from-cart-button" data-id="{{$item->id}}"><i class="icon_close"></i></a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row cart-table-checkout-cards">
                     <div class="col-lg-4 col-md-6">
                         <div class="cart-tax">
                             <div class="title-wrap">
@@ -172,8 +130,81 @@
                         </div>
                     </div>
                 </div>
+                @else
+                <h2 class="text-center mb-5">No Product is in your Cart</h2>
+                @endif
             </div>
         </div>
     </div>
 </div>
 @endsection
+@push('custom-js')
+<script>
+    $('.remove-from-cart-button').click(function() {
+        let id = $(this).data('id');
+        $.ajax({
+            url: `{{route('cart.delete')}}`,
+            method: "DELETE",
+            data: {
+                "_token": "{{csrf_token()}}",
+                "id": id
+            },
+            success: function(response) {
+                if (response.data == 'success') {
+                    let cartCount = parseInt($('.cart-hidden-count').val());
+                    $('.cart-table').find(`a[data-id="${id}"]`).closest('tr').addClass('d-none');
+                    $('.cart-count').html(cartCount - 1);
+                    $('.cart-hidden-count').val(cartCount - 1);
+                    if (cartCount - 1 == 0) {
+                        $('.cart-table-content').html('<h2 class="text-center">No Product is in your Cart</h2>');
+                        $('.cart-page-title').addClass('d-none');
+                        $('.cart-table-checkout-cards').addClass('d-none');
+                    }
+                } else {
+                    $('.alert-danger').addClass('show');
+                    $('.alert-danger').html(response.message);
+                    $('.alert-danger').removeClass('d-none');
+                }
+            },
+            error: function(response) {
+
+            }
+        });
+    });
+</script>
+<!-- <script>
+    $('.qtybutton').click(function() {
+        let id = $(this).closest('.cart-plus-minus-box').data('id');
+        let quantity = $(this).closest('.cart-plus-minus-box').val();
+        alert(id);
+        $.ajax({
+            url: `{{route('cart.update')}}`,
+            method: "PATCH",
+            data: {
+                "_token": "{{csrf_token()}}",
+                "id": id,
+                "quantity": quantity
+            },
+            success: function(response) {
+                if (response.data == 'success') {
+                    let cartCount = parseInt($('.cart-hidden-count').val());
+                    $('.cart-table').find(`a[data-id="${id}"]`).closest('tr').addClass('d-none');
+                    $('.cart-count').html(cartCount - 1);
+                    $('.cart-hidden-count').val(cartCount - 1);
+                    if (cartCount - 1 == 0) {
+                        $('.cart-table-content').html('<h2 class="text-center">No Product is in your Cart</h2>');
+                        $('.cart-page-title').addClass('d-none');
+                    }
+                } else {
+                    $('.alert-danger').addClass('show');
+                    $('.alert-danger').html(response.message);
+                    $('.alert-danger').removeClass('d-none');
+                }
+            },
+            error: function(response) {
+
+            }
+        });
+    });
+</script> -->
+@endpush
