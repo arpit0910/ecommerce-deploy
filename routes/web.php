@@ -88,12 +88,12 @@ Route::post('cms/toggleStatus', [CMSController::class, 'toggleStatus'])->name('c
 
 // Wishlist Routes
 Route::post('wishlist/store', [WishlistController::class, 'store'])->name('wishlist.store');
-Route::delete('wishlist/{id}/delete', [WishlistController::class, 'destroy'])->name('wishlist.delete');
+Route::delete('wishlist/delete', [WishlistController::class, 'destroy'])->name('wishlist.delete');
 
 // Cart Routes
 Route::post('cart/store', [CartController::class, 'store'])->name('cart.store');
-Route::patch('cart/{id}/update', [CartController::class, 'update'])->name('cart.update');
-Route::delete('cart/{id}/delete', [CartController::class, 'destroy'])->name('cart.delete');
+Route::patch('cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::delete('cart/delete', [CartController::class, 'destroy'])->name('cart.delete');
 
 // Review Routes
 
