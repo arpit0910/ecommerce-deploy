@@ -92,8 +92,8 @@
             </div>
         </div>
     </div>
-    <div class="product-categories-area pb-115">
-        <div class="container">
+    <div class="product-categories-area section-padding-1 pb-115">
+        <div class="container-fluid">
             <div class="section-title-btn-wrap border-bottom-3 mb-50 pb-20">
                 <div class="section-title-3">
                     <h2>Popular Categories</h2>
@@ -131,7 +131,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="single-product-wrap mb-35">
                                 <div class="product-img product-img-zoom mb-20">
-                                    <a href="product-details.html">
+                                    <a href="{{route('frontend.product',$product->id)}}">
                                         <img src="assets/images/product/product-3.jpg" alt="" />
                                     </a>
                                     <!-- <span class="pro-badge left bg-red">-20%</span> -->
@@ -154,14 +154,14 @@
                                 <div class="product-content-wrap">
                                     <div class="product-content-left">
                                         <h4>
-                                            <a href="product-details.html">{{$product->name}}</a>
+                                            <a href="{{route('frontend.product',$product->id)}}">{{$product->name}}</a>
                                         </h4>
                                         <div class="product-price">
                                             @if($product->msp)
                                             <span class="new-price">{{$product->msp}}</span>
-                                            <span class="old-price">{{$product->mrp}}</span>
+                                            <span class="old-price">₹{{$product->mrp}}</span>
                                             @else
-                                            <span class="new-price">{{$product->mrp}}</span>
+                                            <span class="new-price">₹{{$product->mrp}}</span>
                                             @endif
                                         </div>
                                     </div>
@@ -173,8 +173,8 @@
                                 </div>
                             </div>
                         </div>
+                        @endforeach
                     </div>
-                    @endforeach
                 </div>
             </div>
         </div>

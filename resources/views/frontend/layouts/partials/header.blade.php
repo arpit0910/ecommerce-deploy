@@ -30,6 +30,7 @@
                     </div>
                     <div class="col-xl-3 col-lg-3">
                         <div class="header-action header-action-flex">
+                            @if(auth()->user())
                             <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
                                 <a href="{{route('frontend.profile')}}"><i class="icon-user"></i></a>
                             </div>
@@ -42,6 +43,11 @@
                                     <i class="icon-basket-loaded"></i><span class="pro-count black cart-count">{{$cartCount}}</span>
                                 </a>
                             </div>
+                            @else
+                            <div class="btn btn-warning">
+                                Sign In
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>

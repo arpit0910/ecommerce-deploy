@@ -22,7 +22,7 @@ class FrontendController extends Controller
         }
         return view('frontend.index', compact('cartCount', 'wishlistCount', 'categories', 'products'));
     }
-    public function product()
+    public function product($id)
     {
         $cartCount = 0;
         $wishlistCount = 0;
@@ -30,7 +30,12 @@ class FrontendController extends Controller
             $cartCount = Cart::where('user_id', auth()->user()->id)->count();
             $wishlistCount = Wishlist::where('user_id', auth()->user()->id)->count();
         }
-        return view('frontend.product', compact('cartCount', 'wishlistCount'));
+        $product = Product::where('id', $id)->first();
+        if ($product) {
+            return view('frontend.product', compact('cartCount', 'wishlistCount'));
+        } else {
+            return redirect()->back()->with('error', 'An error occurred. Try again later.');
+        }
     }
     public function shop()
     {
