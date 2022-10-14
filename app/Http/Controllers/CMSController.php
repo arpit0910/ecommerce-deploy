@@ -27,6 +27,7 @@ class CMSController extends Controller
         $cms->key = $request->title;
         $cms->slug = Str::slug($request->title);
         $cms->value = $request->description;
+        $cms->status = '1';
         if ($cms->save()) {
             return redirect()->route('cms.index')->with('message', "CMS created successfully");
         } else {
@@ -57,6 +58,7 @@ class CMSController extends Controller
             }
         }
     }
+
     public function show($slug)
     {
         $cms = CMS::where('slug', $slug)->first();
